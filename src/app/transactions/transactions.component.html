@@ -1,0 +1,13 @@
+<h2>Movimenti</h2>
+
+<mat-form-field>
+    <mat-label>Current Account</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let account of accounts" [value]="account">
+        {{account.name}} ({{account.amount}} &euro;)
+      </mat-option>
+    </mat-select>
+    <mat-error>Please choose an Account</mat-error>
+    <mat-hint>Change selected account</mat-hint>
+</mat-form-field>
+

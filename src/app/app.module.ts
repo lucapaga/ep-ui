@@ -6,20 +6,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+
 
 import { AppComponent } from './app.component';
 import { AccountTotalsComponent } from './account-totals/account-totals.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 const appRoutes: Routes = [
   { path: '',   redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: AccountTotalsComponent }
+  { path: 'dashboard', component: AccountTotalsComponent },
+  { path: 'transactions', component: TransactionsComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountTotalsComponent
+    AccountTotalsComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +36,8 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     ),
     MatTableModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 
+import {FormControl, Validators} from '@angular/forms';
+
 import { Account } from '../entities/account'
 
 import { CurrentAccountService } from '../svcs/current-account.service'
 
 @Component({
-  selector: 'app-account-totals',
-  templateUrl: './account-totals.component.html',
-  styleUrls: ['./account-totals.component.css']
+  selector: 'app-transactions',
+  templateUrl: './transactions.component.html',
+  styleUrls: ['./transactions.component.css']
 })
-export class AccountTotalsComponent implements OnInit {
+export class TransactionsComponent implements OnInit {
 
   accounts: Account[] = null;
-  displayedColumns: string[] = ['TIPO', 'CONTO', 'SALDO'];
+
+  accountsDropDown = new FormControl('', [Validators.required]);
 
   constructor(private ccService : CurrentAccountService) { }
 
