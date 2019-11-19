@@ -1,13 +1,46 @@
-<h2>Movimenti</h2>
+<div class="app-panel">
+    <h2>Movimenti</h2>
 
-<mat-form-field>
-    <mat-label>Current Account</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let account of accounts" [value]="account">
-        {{account.name}} ({{account.amount}} &euro;)
-      </mat-option>
-    </mat-select>
-    <mat-error>Please choose an Account</mat-error>
-    <mat-hint>Change selected account</mat-hint>
-</mat-form-field>
+    <mat-form-field style="width: 300px;">
+        <mat-label>Current Account</mat-label>
+        <mat-select (selectionChange)="onSelectCurrentAccount($event)">
+        <mat-option *ngFor="let account of accounts" [value]="account">
+            {{account.name}} ({{account.amount}} &euro;)
+        </mat-option>
+        </mat-select>
+        <mat-error>Please choose an Account</mat-error>
+        <mat-hint>Change selected account</mat-hint>
+    </mat-form-field>
 
+    <h4>Ultimi Movimenti</h4>
+
+    <table *ngIf="transactions != null && transactions.length > 0" mat-table [dataSource]="transactions" matSort class="mat-elevation-z8" style="width: 100%;">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="accountDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">DATA CONTABILE</th> 
+            <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.accountDate | date:"dd/MM/yyyy"}} </td>
+        </ng-container>
+        <ng-container matColumnDef="eventDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">DATA OPERAZIONE</th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.eventDate | date:"dd/MM/yyyy"}} </td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>DESCRIZIONE</th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: right;">IMPORTO</th>
+            <td mat-cell *matCellDef="let element" style="text-align: right;"> {{element.amount | currency:"EUR":"symbol":"1.2"}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: displayedColumns"></tr>
+    </table>
+
+    <p *ngIf="transactions == null || transactions.length == 0">Non sono presenti movimenti</p>
+    
+    <button mat-fab color="primary" (click)="createNewTransaction()" style="float: right; margin-right: 25px; margin-top: 25px;">+</button>
+
+</div>

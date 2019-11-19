@@ -9,11 +9,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 import { AppComponent } from './app.component';
 import { AccountTotalsComponent } from './account-totals/account-totals.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { CreateTxDialogComponent } from './create-tx-dialog/create-tx-dialog.component';
 
 const appRoutes: Routes = [
   { path: '',   redirectTo: '/dashboard', pathMatch: 'full' },
@@ -25,7 +30,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     AccountTotalsComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    CreateTxDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +41,11 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     ),
-    MatTableModule,
+    MatTableModule, MatSortModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
