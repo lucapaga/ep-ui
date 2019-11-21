@@ -12,13 +12,15 @@ import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material';
 
 
 import { AppComponent } from './app.component';
 import { AccountTotalsComponent } from './account-totals/account-totals.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { CreateTxDialogComponent } from './create-tx-dialog/create-tx-dialog.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const appRoutes: Routes = [
   { path: '',   redirectTo: '/dashboard', pathMatch: 'full' },
@@ -33,6 +35,9 @@ const appRoutes: Routes = [
     TransactionsComponent,
     CreateTxDialogComponent
   ],
+  entryComponents: [
+    CreateTxDialogComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -45,9 +50,13 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule, MatNativeDateModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+ }

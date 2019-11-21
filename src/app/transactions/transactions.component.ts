@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { FormControl, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
@@ -10,6 +10,7 @@ import { CurrentAccountService } from '../svcs/current-account.service'
 import { TransactionsService } from '../svcs/transactions.service'
 import { Transaction } from '../entities/transaction';
 import { CreateTxDialogComponent } from '../create-tx-dialog/create-tx-dialog.component';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-transactions',
@@ -24,8 +25,12 @@ export class TransactionsComponent implements OnInit {
 
   accountsDropDown = new FormControl('', [Validators.required]);
   displayedColumns: string[] = ['id', 'accountDate', 'eventDate', 'description', 'amount'];
+  @ViewChild('txListTbl', null) txListDataTable: MatTable<Transaction>;
 
-  constructor(private ccService : CurrentAccountService, private txService: TransactionsService, public dialog: MatDialog) { }
+  constructor(
+    private ccService : CurrentAccountService, 
+    private txService: TransactionsService, 
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.accounts = this.ccService.getAccountList();
@@ -39,13 +44,16 @@ export class TransactionsComponent implements OnInit {
 
   createNewTransaction(): void {
     const dialogRef = this.dialog.open(CreateTxDialogComponent, {
-      width: '250px',
+      width: '60%', height: '450px',
       data: {account: this.selectedAccount, transaction: new Transaction(null, new Date(), new Date(), null, null)}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed');
-      this.transactions.push(result);
+      if(result != null) {
+        this.transactions.push(result);
+        this.txListDataTable.renderRows();
+        }
     });
    }
 
