@@ -4,6 +4,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { v4 as uuid } from 'uuid';
+
 import { Account } from '../entities/account'
 
 import { CurrentAccountService } from '../svcs/current-account.service'
@@ -45,15 +47,17 @@ export class TransactionsComponent implements OnInit {
   createNewTransaction(): void {
     const dialogRef = this.dialog.open(CreateTxDialogComponent, {
       width: '60%', height: '450px',
-      data: {account: this.selectedAccount, transaction: new Transaction(null, new Date(), new Date(), null, null)}
+      data: {account: this.selectedAccount, transaction: new Transaction(uuid(), new Date(), new Date(), null, null)}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed');
       if(result != null) {
         this.transactions.push(result);
-        this.txListDataTable.renderRows();
+        if(this.txListDataTable != null) {
+          this.txListDataTable.renderRows();
         }
+      }
     });
    }
 

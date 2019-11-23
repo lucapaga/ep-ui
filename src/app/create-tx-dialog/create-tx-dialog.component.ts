@@ -12,20 +12,12 @@ import { Transaction } from '../entities/transaction';
   styleUrls: ['./create-tx-dialog.component.css']
 })
 export class CreateTxDialogComponent implements OnInit {
-//  selectedTransaction: Transaction = null;
-//  selectedAccount: Account = null;
-//  eventDateFC: FormControl;
-//  accountDateFC: FormControl;
 
   constructor(
     public dialogRef: MatDialogRef<CreateTxDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CreateTxDialogData) { }
 
   ngOnInit() {
-    //this.selectedTransaction = this.data.transaction;
-    //this.selectedAccount = this.data.account;
-    //this.eventDateFC = new FormControl(this.data.transaction.eventDate);
-    //this.accountDateFC = new FormControl(this.data.transaction.accountDate);
   }
 
   onCancel(): void {

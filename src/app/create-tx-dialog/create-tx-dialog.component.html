@@ -1,27 +1,28 @@
 <p mat-dialog-title>Aggiungi Transazione | Account: <b>{{data.account.name}}</b></p>
-<div mat-dialog-content>
-  <mat-form-field>
-    <input matInput [matDatepicker]="pickerEventDate" placeholder="Data Movimento" [(value)]="data.transaction.eventDate">
-    <mat-datepicker-toggle matSuffix [for]="pickerEventDate"></mat-datepicker-toggle>
-    <mat-datepicker #pickerEventDate></mat-datepicker>
-  </mat-form-field>
-  <br/>
-  <mat-form-field>
-    <input matInput [matDatepicker]="pickerAccountDate" placeholder="Data Valuta" [(value)]="data.transaction.accountDate">
-    <mat-datepicker-toggle matSuffix [for]="pickerAccountDate"></mat-datepicker-toggle>
-    <mat-datepicker #pickerAccountDate></mat-datepicker>
-  </mat-form-field>
-  <br/>
-  <mat-form-field>
-    <input matInput placeholder="Importo" [(value)]="data.transaction.amount">
-  </mat-form-field>
-  {{data.transaction.amount}}
-  <br/>
-  <mat-form-field>
-    <input matInput placeholder="Descrizione" [(value)]="data.transaction.description">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Annulla</button>
-  <button mat-button [mat-dialog-close]="data.transaction" cdkFocusInitial>Inserisci</button>
-</div>
+<!--form-->
+    <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput [matDatepicker]="pickerEventDate" placeholder="Data Movimento" [(value)]="data.transaction.eventDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerEventDate"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEventDate></mat-datepicker>
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput [matDatepicker]="pickerAccountDate" placeholder="Data Valuta" [(value)]="data.transaction.accountDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerAccountDate"></mat-datepicker-toggle>
+      <mat-datepicker #pickerAccountDate></mat-datepicker>
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput placeholder="Importo" [(ngModel)]="data.transaction.amount">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input matInput placeholder="Descrizione" [(ngModel)]="data.transaction.description">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Annulla</button>
+    <button mat-button [mat-dialog-close]="data.transaction" cdkFocusInitial>Inserisci</button>
+  </div>    
+<!--/form-->
