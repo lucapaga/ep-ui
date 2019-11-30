@@ -17,7 +17,11 @@ export class AccountTotalsComponent implements OnInit {
   constructor(private ccService : CurrentAccountService) { }
 
   ngOnInit() {
-    this.accounts = this.ccService.getAccountList();
+    this.ccService.getAccountList().subscribe(
+      (data: Account[]) => { this.accounts = data },
+      error => { this.accounts = [] }
+    )
+    //this.accounts = this.ccService.getAccountList();
   }
 
 }
