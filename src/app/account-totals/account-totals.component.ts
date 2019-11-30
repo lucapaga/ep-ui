@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from '../entities/account'
 
 import { CurrentAccountService } from '../svcs/current-account.service'
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-totals',
@@ -12,9 +13,12 @@ import { CurrentAccountService } from '../svcs/current-account.service'
 export class AccountTotalsComponent implements OnInit {
 
   accounts: Account[] = null;
-  displayedColumns: string[] = ['TIPO', 'CONTO', 'SALDO'];
+  displayedColumns: string[] = ['TIPO', 'CONTO', 'SALDO', 'ACTION_BUTTONZ'];
 
-  constructor(private ccService : CurrentAccountService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private ccService : CurrentAccountService) { }
 
   ngOnInit() {
     this.ccService.getAccountList().subscribe(
@@ -22,6 +26,10 @@ export class AccountTotalsComponent implements OnInit {
       error => { this.accounts = [] }
     )
     //this.accounts = this.ccService.getAccountList();
+  }
+
+  gotoTransactions(selectedAccount : Account) {
+    this.router.navigate(['/transactions', { accountName: selectedAccount.name }]);
   }
 
 }
