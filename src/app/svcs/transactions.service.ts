@@ -4,6 +4,9 @@ import { AccountTransactions } from "../entities/account-transactions"
 import { Account } from '../entities/account';
 import { Transaction } from '../entities/transaction';
 
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,10 +14,10 @@ export class TransactionsService {
 
   top5TxPerAccount: AccountTransactions[];
 
-  constructor() { 
+  constructor(private http: HttpClient) { 
     this.top5TxPerAccount = [
       new AccountTransactions(
-        new Account("8427983247928437", null, null, null), 
+        new Account("8427983247928437", null, "POSTE", null), 
         [
           new Transaction("7F8S97D8S798DSF79FS79SDF7", new Date("2019-11-19"), new Date("2019-11-18"), "Accredito Stipendio", 2450.00),
           new Transaction("7F8S97D8S79C8DC998CD99988", new Date("2019-11-18"), new Date("2019-11-18"), "Ricarica Satispay", -15.00),
@@ -37,13 +40,21 @@ export class TransactionsService {
   }
 
 
-  getLastFiveTxsForAccount(account: Account): Transaction[] {
+  getLastFiveTxsForAccount(account: Account): Observable<Transaction[]> {
+    return this.getLastFiveTxsForAccountName(account.name);
+  }
+
+  getLastFiveTxsForAccountName(accountName: string): Observable<Transaction[]> {
+    return this.http.get<Transaction[]>('/epi/accounts/' + accountName + '/transactions');
+  }
+
+  getLastFiveTxsForAccountNameMock(accountName: string): Observable<Transaction[]> {
     for (var anAccountTx of this.top5TxPerAccount) {
-      if (anAccountTx.account.id === account.id) {
-        return anAccountTx.transactions;        
+      if (anAccountTx.account.name === accountName) {
+        return of(anAccountTx.transactions);
       }
     }
 
-    return [];
+    return of([]);
   }
 }

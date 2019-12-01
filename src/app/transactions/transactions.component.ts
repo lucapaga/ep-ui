@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { FormControl, Validators } from '@angular/forms';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange, MatSelect } from '@angular/material/select';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { v4 as uuid } from 'uuid';
+
+import { switchMap } from 'rxjs/operators';
 
 import { Account } from '../entities/account'
 
@@ -14,6 +16,7 @@ import { Transaction } from '../entities/transaction';
 import { CreateTxDialogComponent } from '../create-tx-dialog/create-tx-dialog.component';
 import { MatTable } from '@angular/material/table';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-transactions',
@@ -26,31 +29,51 @@ export class TransactionsComponent implements OnInit {
   accountsObservable : Observable<Account[]>;
   transactions: Transaction[] = null;
   selectedAccount: Account;
+  selectedAccountName: string = "";
 
   accountsDropDown = new FormControl('', [Validators.required]);
-  displayedColumns: string[] = ['id', 'accountDate', 'eventDate', 'description', 'amount'];
+  displayedColumns: string[] = ['accountDate', 'eventDate', 'description', 'amount'];
+
   @ViewChild('txListTbl', null) txListDataTable: MatTable<Transaction>;
+  @ViewChild('accountsSelect', null) accountsSelect: MatSelect;
 
   constructor(
     private ccService : CurrentAccountService, 
     private txService: TransactionsService, 
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     // TODO: OTTIMIZZARE!
-    this.ccService.getAccountList().subscribe(data => { 
-      console.log(data);  
-      this.accounts = data; 
+    this.route.paramMap.subscribe(params => {
+      var accountNameParam = params.get('accountName') || '';
+      console.log("this.selectedAccountName is now '" + this.selectedAccountName + "'");
 
-      //console.log(data['accounts']);  
-      //this.accounts = data['accounts']; 
+      this.ccService.getAccountList().subscribe(data => { 
+        console.log(data);  
+        this.accounts = data;
+      });
+
+      this.doLoadLast10Txs(accountNameParam);
     });
   }
 
   onSelectCurrentAccount(selection: MatSelectChange) {
-    //console.info("Selected account name '" + selection.value.name + "'. It has " + selection.value.amount + "€ in capacity");
-    this.selectedAccount = selection.value;
-    this.transactions = this.txService.getLastFiveTxsForAccount(selection.value);
+    console.log("Ecco la selezione: ", selection);
+    this.doLoadLast10Txs(selection.value);
+  }
+
+  doLoadLast10Txs(accountName: string) {
+    this.selectedAccountName = accountName;
+    console.log("selectedAccountName = ", this.selectedAccountName);
+    
+    if(accountName != null && accountName != "") {
+      this.txService.getLastFiveTxsForAccountName(accountName).subscribe(data => {
+        this.transactions = data;
+      });
+    } else {
+      this.transactions = [];
+    }
   }
 
   createNewTransaction(): void {
