@@ -52,6 +52,7 @@ export class TransactionsComponent implements OnInit {
       this.ccService.getAccountList().subscribe(data => { 
         console.log(data);  
         this.accounts = data;
+        this.doSelectAccount(accountNameParam);
       });
 
       this.doLoadLast10Txs(accountNameParam);
@@ -60,13 +61,23 @@ export class TransactionsComponent implements OnInit {
 
   onSelectCurrentAccount(selection: MatSelectChange) {
     console.log("Ecco la selezione: ", selection);
+    this.doSelectAccount(selection.value);
     this.doLoadLast10Txs(selection.value);
+  }
+
+  doSelectAccount(accountName: string) {
+    this.accounts.forEach(anAccount => {
+      if(anAccount.name == accountName) {
+        console.log("Trovato!");
+        this.selectedAccount = anAccount;
+      }
+    });
   }
 
   doLoadLast10Txs(accountName: string) {
     this.selectedAccountName = accountName;
     console.log("selectedAccountName = ", this.selectedAccountName);
-    
+
     if(accountName != null && accountName != "") {
       this.txService.getLastFiveTxsForAccountName(accountName).subscribe(data => {
         this.transactions = data;
