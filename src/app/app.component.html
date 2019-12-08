@@ -299,15 +299,28 @@
 <!-- ******************************************************************************************** -->
 <!-- ******************************************************************************************** -->
 
+<mat-toolbar color="basic" class="main-toolbar mat-elevation-z2">
+  <mat-toolbar-row>
+    <mat-icon class="main-toolbar-menu-item-icon">scatter_plot</mat-icon>
+    <span class="main-toolbar-app-title">Economia Personale</span>
+    <span class="main-toolbar-spacer"></span>
+    <a routerLink="/dashboard" routerLinkActive="active">
+      <mat-icon class="main-toolbar-menu-item-icon">dashboard</mat-icon>
+    </a> 
+    <a routerLink="/transactions" routerLinkActive="active">
+      <mat-icon class="main-toolbar-menu-item-icon">timeline</mat-icon>
+    </a>
+    <span class="main-toolbar-trailer"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
 <div class="app-panel">
-  <h1>Economia Personale</h1>
-
-  <nav>
-    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a> 
-    |
-    <a routerLink="/transactions" routerLinkActive="active">Movimenti</a>
-  </nav>
-
+  <!--
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a> 
+      |
+      <a routerLink="/transactions" routerLinkActive="active">Movimenti</a>
+    </nav>
+  -->  
   <router-outlet></router-outlet>
 </div>
 

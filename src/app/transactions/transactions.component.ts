@@ -47,7 +47,6 @@ export class TransactionsComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // TODO: OTTIMIZZARE!
     this.route.paramMap.subscribe(params => {
       var accountNameParam = params.get('accountName') || '';
       console.log("this.selectedAccountName is now '" + this.selectedAccountName + "'");
@@ -75,10 +74,10 @@ export class TransactionsComponent implements OnInit {
       if(anAccount.name == accountName) {
         console.log("Trovato!");
         this.selectedAccount = anAccount;
-        this.isLoadingAccounts = false;
-        this.showLoader = (this.isLoadingAccounts || this.isLoadingTransactions);
       }
     });
+    this.isLoadingAccounts = false;
+    this.showLoader = (this.isLoadingAccounts || this.isLoadingTransactions);
   }
 
   doLoadLast10Txs(accountName: string) {
@@ -93,7 +92,9 @@ export class TransactionsComponent implements OnInit {
       });
     } else {
       this.transactions = [];
-    }
+      this.isLoadingTransactions = false;
+      this.showLoader = (this.isLoadingAccounts || this.isLoadingTransactions);
+  }
   }
 
   createNewTransaction(): void {

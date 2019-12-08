@@ -1,8 +1,8 @@
 <div class="app-panel">
-    <h2>Movimenti</h2>
+    <!--h2>Movimenti</h2-->
 
     <mat-form-field class="txsAccountSelectionFormField">
-        <mat-label>Current Account</mat-label>
+        <mat-label>Conto</mat-label>
         <mat-select (selectionChange)="onSelectCurrentAccount($event)" [(ngModel)]="selectedAccountName" #accountsSelect>
             <mat-option *ngFor="let account of accounts" [value]="account.name">
                 <span>
@@ -13,11 +13,11 @@
                 </span>
             </mat-option>
         </mat-select>
-        <mat-error>Please choose an Account</mat-error>
-        <mat-hint>Change selected account</mat-hint>
+        <mat-error>Scegliere un Conto</mat-error>
+        <!--mat-hint>Change selected account</mat-hint-->
     </mat-form-field>
 
-    <h4>Ultimi Movimenti</h4>
+    <!--h4>Ultimi Movimenti</h4-->
 
     <table *ngIf="transactions != null && transactions.length > 0" mat-table [dataSource]="transactions" matSort class="mat-elevation-z8 full-width-widget" #txListTbl>
         <ng-container matColumnDef="id">
@@ -46,8 +46,9 @@
 
     <p *ngIf="transactions == null || transactions.length == 0">Non sono presenti movimenti</p>
     
-    <button mat-fab color="primary" (click)="createNewTransaction()" class="create-new-tx-button">+</button>
-
+    <div  [hidden]="transactions == null || transactions.length == 0">
+        <button mat-mini-fab color="basic" (click)="createNewTransaction()" class="create-new-tx-button">+</button>
+    </div>
 </div>
 <div [hidden]="!showLoader" class="loader-overlay-container">
     <div class="loader-placeholder-container">
