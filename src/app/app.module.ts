@@ -18,6 +18,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 
 import { AppComponent } from './app.component';
@@ -58,7 +60,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatDialogModule,
     MatDatepickerModule, MatNativeDateModule,
-    MatInputModule, MatIconModule
+    MatInputModule, MatIconModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

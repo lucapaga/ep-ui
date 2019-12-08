@@ -14,6 +14,7 @@ export class AccountTotalsComponent implements OnInit {
 
   accounts: Account[] = null;
   displayedColumns: string[] = ['TIPO', 'CONTO', 'SALDO', 'ACTION_BUTTONZ'];
+  showLoader: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +23,10 @@ export class AccountTotalsComponent implements OnInit {
 
   ngOnInit() {
     this.ccService.getAccountList().subscribe(
-      (data: Account[]) => { this.accounts = data },
+      (data: Account[]) => { 
+        this.accounts = data;
+        this.showLoader = false;
+      },
       error => { this.accounts = [] }
     )
     //this.accounts = this.ccService.getAccountList();

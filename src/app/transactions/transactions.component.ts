@@ -24,6 +24,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./transactions.component.css']
 })
 export class TransactionsComponent implements OnInit {
+  showLoader: boolean = true;
+  isLoadingAccounts: boolean = true;
+  isLoadingTransactions: boolean = true;
 
   accounts: Account[] = [];
   accountsObservable : Observable<Account[]>;
@@ -61,6 +64,8 @@ export class TransactionsComponent implements OnInit {
 
   onSelectCurrentAccount(selection: MatSelectChange) {
     console.log("Ecco la selezione: ", selection);
+    this.isLoadingAccounts = true;
+    this.isLoadingTransactions = true;
     this.doSelectAccount(selection.value);
     this.doLoadLast10Txs(selection.value);
   }
@@ -70,6 +75,8 @@ export class TransactionsComponent implements OnInit {
       if(anAccount.name == accountName) {
         console.log("Trovato!");
         this.selectedAccount = anAccount;
+        this.isLoadingAccounts = false;
+        this.showLoader = (this.isLoadingAccounts || this.isLoadingTransactions);
       }
     });
   }
@@ -81,6 +88,8 @@ export class TransactionsComponent implements OnInit {
     if(accountName != null && accountName != "") {
       this.txService.getLastFiveTxsForAccountName(accountName).subscribe(data => {
         this.transactions = data;
+        this.isLoadingTransactions = false;
+        this.showLoader = (this.isLoadingAccounts || this.isLoadingTransactions);
       });
     } else {
       this.transactions = [];
