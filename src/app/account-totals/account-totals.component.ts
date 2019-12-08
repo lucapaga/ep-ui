@@ -27,7 +27,10 @@ export class AccountTotalsComponent implements OnInit {
         this.accounts = data;
         this.showLoader = false;
       },
-      error => { this.accounts = [] }
+      error => { 
+        this.accounts = [];
+        this.showLoader = false; 
+      }
     )
     //this.accounts = this.ccService.getAccountList();
   }

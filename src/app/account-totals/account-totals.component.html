@@ -1,7 +1,7 @@
 <div class="app-panel">
     <h2>Dashboard</h2>
 
-    <table mat-table [dataSource]="accounts" class="mat-elevation-z8" style="width: 75%;">
+    <table mat-table [dataSource]="accounts" class="mat-elevation-z8 account-summmary-table">
         <ng-container matColumnDef="ID">
             <th mat-header-cell *matHeaderCellDef>ID</th>
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
@@ -30,8 +30,8 @@
         <tr mat-row *matRowDef="let myRowData; columns: displayedColumns"></tr>
     </table>
 </div>
-<div [hidden]="!showLoader" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.85);">
-    <div style="position: absolute; margin: 0 auto; left: 50%; top: 40%;">
+<div [hidden]="!showLoader" class="loader-overlay-container">
+    <div class="loader-placeholder-container">
         <mat-spinner></mat-spinner>
     </div>
 </div>
