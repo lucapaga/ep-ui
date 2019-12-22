@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  currentAccountService:  {
+    mock: true,
+    uri: "/epi/accounts/list"
+  },
+  transactionsService:  {
+    mock: true,
+    baseUri: "/epi/accounts/",
+    trailingUri: "/transactions"
+  }
 };
 
 /*
